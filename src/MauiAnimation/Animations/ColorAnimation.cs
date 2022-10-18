@@ -26,7 +26,7 @@
 
             return Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(async () =>
+                Target.Dispatcher.Dispatch(async () =>
                 {
                     await Target.ColorTo(fromColor, ToColor, c => Target.BackgroundColor = c, Convert.ToUInt32(Duration));
                 });

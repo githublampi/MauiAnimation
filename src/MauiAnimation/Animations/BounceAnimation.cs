@@ -15,7 +15,7 @@
 
             return Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() =>
+                Target.Dispatcher.Dispatch(() =>
                 {
                     Target.Animate("BounceIn", BounceIn(), 16, Convert.ToUInt32(Duration));
                 });
@@ -52,7 +52,7 @@
 
             return Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() =>
+                Target.Dispatcher.Dispatch(() =>
                 {
                     Target.Animate("BounceOut", BounceOut(), 16, Convert.ToUInt32(Duration));
                 });

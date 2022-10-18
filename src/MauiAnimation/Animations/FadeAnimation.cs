@@ -54,10 +54,12 @@
 
             return Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    Target.Animate("FadeIn", FadeIn(), 16, Convert.ToUInt32(Duration));
-                });
+                Target.Dispatcher.Dispatch(() =>
+                    Target.Animate("FadeIn", FadeIn(), 16, Convert.ToUInt32(Duration)));
+                //Device.BeginInvokeOnMainThread(() =>
+                //{
+                //    Target.Animate("FadeIn", FadeIn(), 16, Convert.ToUInt32(Duration));
+                //});
             });
         }
 
@@ -103,7 +105,7 @@
 
             return Task.Run(() =>
             {
-                Device.BeginInvokeOnMainThread(() =>
+                Target.Dispatcher.Dispatch(() =>
                 {
                     Target.Animate("FadeOut", FadeOut(), 16, Convert.ToUInt32(Duration));
                 });

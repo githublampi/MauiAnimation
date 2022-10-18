@@ -72,7 +72,8 @@
             }
             else
             {
-                RepeatAnimation(new CancellationTokenSource());
+                var cts = new CancellationTokenSource();
+                RepeatAnimation(cts);
             }
         }
 
@@ -83,6 +84,7 @@
             if (_animateTimerCancellationTokenSource != null)
             {
                 _animateTimerCancellationTokenSource.Cancel();
+                _animateTimerCancellationTokenSource.Dispose();
             }
         }
 
@@ -90,15 +92,24 @@
         {
             _animateTimerCancellationTokenSource = tokenSource;
 
-            Device.BeginInvokeOnMainThread(async () =>
+            Target.Dispatcher.Dispatch(() =>
             {
                 if (!_animateTimerCancellationTokenSource.IsCancellationRequested)
                 {
-                    await BeginAnimation();
-
+                    BeginAnimation().Wait();
                     RepeatAnimation(_animateTimerCancellationTokenSource);
                 }
             });
+            // BeginInvokeOnMainThread obsolete
+            //Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    if (!_animateTimerCancellationTokenSource.IsCancellationRequested)
+            //    {
+            //        await BeginAnimation();
+
+            //        RepeatAnimation(_animateTimerCancellationTokenSource);
+            //    }
+            //});
         }
     }
 }
